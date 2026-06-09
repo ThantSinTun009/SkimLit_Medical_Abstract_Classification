@@ -1,9 +1,9 @@
 import streamlit as st
 import tensorflow as tf
-# import tensorflow_hub as hub
+import tensorflow_hub as hub
 import numpy as np
 import pandas as pd
-import tensorflow_hub as hub
+
 # ==========================================================
 # PAGE CONFIGURATION
 # ==========================================================
@@ -125,24 +125,18 @@ def preprocess(text):
 # ==========================================================
 # PREDICTION
 # ==========================================================
-def predict(text):
 
-    if model is None:
-        return None
+def predict(text):
 
     sentences = preprocess(text)
 
     if len(sentences) == 0:
         return None
 
-    try:
-        probabilities = model.predict(
-            tf.constant(sentences),
-            verbose=0
-        )
-    except Exception as e:
-        st.error(f"Prediction failed: {e}")
-        return None
+    probabilities = model.predict(
+        tf.constant(sentences),
+        verbose=0
+    )
 
     predicted_classes = np.argmax(probabilities, axis=1)
 
@@ -160,24 +154,26 @@ def predict(text):
         })
 
     return pd.DataFrame(results)
-    
+
 # ==========================================================
 # ANALYSIS BUTTON
 # ==========================================================
+
 if st.button("🔍 Analyze Abstract", use_container_width=True):
 
-    if model is None:
-        st.error("Model not loaded. Check deployment logs.")
-        st.stop()
-
     with st.spinner("Running classification model..."):
+
         df = predict(abstract_text)
 
-    if df is None or df.empty:
-        st.warning("No valid predictions generated.")
+    if df is None:
+        st.warning(
+            "No text detected. Please enter at least one sentence from a scientific abstract."
+        )
         st.stop()
 
-    st.success(f"Classification completed successfully. {len(df)} sentence(s) analyzed.")
+    st.success(
+        f"Classification completed successfully. {len(df)} sentence(s) analyzed."
+    )
 
     # ======================================================
     # METRICS
