@@ -1,8 +1,8 @@
 streamlit
-tensorflow==2.20.0
-tf-keras==2.20.0
-tensorflow-hub==0.16.1
-tensorflow-text==2.20.1
+tensorflow
+tf-keras
+tensorflow-hub
+tensorflow-text
 numpy
 pandas
 scikit-learn
