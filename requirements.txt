@@ -1,8 +1,0 @@
-streamlit
-numpy
-pandas
-scikit-learn
-tensorflow
-tensorflow-hub
-protobuf<5
-tensorflow-text
