@@ -38,21 +38,14 @@ COLORS = {
 # MODEL LOADING
 # ==========================================================
 
-# ==========================================================
-# MODEL LOADING (SAFE VERSION)
-# ==========================================================
-
 @st.cache_resource
 def load_model():
-    try:
-        model = tf.keras.models.load_model(
-            "skimlit_model1.keras",
-            compile=False
-        )
-        return model
-    except Exception as e:
-        st.error(f"Model loading failed: {e}")
-        return None
+    model = tf.keras.models.load_model(
+        "skimlit_model1.keras",
+        custom_objects={"KerasLayer": hub.KerasLayer},
+        compile=False
+    )
+    return model
 
 model = load_model()
 
