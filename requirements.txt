@@ -2,7 +2,7 @@ streamlit
 numpy
 pandas
 scikit-learn
-tensorflow==2.15.0
+tensorflow
 tensorflow-hub
 tensorflow-text
 protobuf<5
