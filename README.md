@@ -65,9 +65,8 @@ This project includes:
 SkimLit_Medical_Abstract_Classification/
 │
 ├── skimlit_model1.keras # Trained deep learning model
-├── app.py # Streamlit web app (if used)
+├── app.py # Streamlit web app
 ├── requirements.txt
-├── data/
 ├── notebooks/
 └── README.md
 ```
