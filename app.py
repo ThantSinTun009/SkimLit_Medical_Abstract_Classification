@@ -1,6 +1,7 @@
 import streamlit as st
 import tensorflow as tf
 import tensorflow_hub as hub
+from tensorflow_hub import KerasLayer
 import numpy as np
 import pandas as pd
 
