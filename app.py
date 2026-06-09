@@ -42,7 +42,7 @@ COLORS = {
 def load_model():
     model = tf.keras.models.load_model(
         "skimlit_model1.keras",
-        custom_objects={"KerasLayer": hub.KerasLayer},
+        # custom_objects={"KerasLayer": hub.KerasLayer},
         compile=False
     )
     return model
