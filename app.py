@@ -38,14 +38,21 @@ COLORS = {
 # MODEL LOADING
 # ==========================================================
 
+# ==========================================================
+# MODEL LOADING (SAFE VERSION)
+# ==========================================================
+
 @st.cache_resource
 def load_model():
-    model = tf.keras.models.load_model(
-        "skimlit_model1.keras",
-        # custom_objects={"KerasLayer": hub.KerasLayer},
-        compile=False
-    )
-    return model
+    try:
+        model = tf.keras.models.load_model(
+            "skimlit_model1.keras",
+            compile=False
+        )
+        return model
+    except Exception as e:
+        st.error(f"Model loading failed: {e}")
+        return None
 
 model = load_model()
 
@@ -125,18 +132,24 @@ def preprocess(text):
 # ==========================================================
 # PREDICTION
 # ==========================================================
-
 def predict(text):
+
+    if model is None:
+        return None
 
     sentences = preprocess(text)
 
     if len(sentences) == 0:
         return None
 
-    probabilities = model.predict(
-        tf.constant(sentences),
-        verbose=0
-    )
+    try:
+        probabilities = model.predict(
+            tf.constant(sentences),
+            verbose=0
+        )
+    except Exception as e:
+        st.error(f"Prediction failed: {e}")
+        return None
 
     predicted_classes = np.argmax(probabilities, axis=1)
 
@@ -154,26 +167,24 @@ def predict(text):
         })
 
     return pd.DataFrame(results)
-
+    
 # ==========================================================
 # ANALYSIS BUTTON
 # ==========================================================
-
 if st.button("🔍 Analyze Abstract", use_container_width=True):
 
-    with st.spinner("Running classification model..."):
-
-        df = predict(abstract_text)
-
-    if df is None:
-        st.warning(
-            "No text detected. Please enter at least one sentence from a scientific abstract."
-        )
+    if model is None:
+        st.error("Model not loaded. Check deployment logs.")
         st.stop()
 
-    st.success(
-        f"Classification completed successfully. {len(df)} sentence(s) analyzed."
-    )
+    with st.spinner("Running classification model..."):
+        df = predict(abstract_text)
+
+    if df is None or df.empty:
+        st.warning("No valid predictions generated.")
+        st.stop()
+
+    st.success(f"Classification completed successfully. {len(df)} sentence(s) analyzed.")
 
     # ======================================================
     # METRICS
