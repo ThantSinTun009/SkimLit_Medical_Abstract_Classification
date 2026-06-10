@@ -22,7 +22,7 @@ This helps in **quick scientific literature understanding (SkimLit task)**.
 
 ## 🎥 YouTube Tutorial Series
 
-This project is explained step-by-step in the following video series:
+The way I learnt project is explained step-by-step in the following video series (In *Burmese*):
 
 ### ▶️ Part 1: Baseline Model
 Introduction to dataset and baseline machine learning model.
