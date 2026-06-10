@@ -44,7 +44,7 @@ https://youtu.be/DupFb4CWGOM
 
 ### ▶️ Part 4: Positional Embeddings
 Adding positional encoding for better sequence understanding.
-https://www.youtube.com/watch?v=PART4_LINK
+Connecting...
 
 ---
 
